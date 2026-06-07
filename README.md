@@ -108,9 +108,44 @@ The backend dependency file `Housing_Backend/requirements.txt` explicitly includ
 
 The `-e .` entry installs the local backend package from `setup.py` in editable mode, allowing local imports from the backend source to work correctly.
 
-## Architecture
 
-### Backend architecture
+
+
+## Architecture & Directory Structure
+
+### Backend Architecture (`Housing_Backend`)
+
+The backend is a Flask-based REST API that serves predictions and recommendations. Upon startup, `app.py` verifies the existence of required artifacts and automatically triggers the training pipeline if they are missing.
+
+```text
+Housing_Backend/
+├── app.py                    # Flask API entry point
+├── artifacts/                # Generated models and data (pickle/CSV)
+│   ├── model.pkl             # Trained ML model
+│   ├── preprocessor.pkl      # Feature preprocessing pipeline
+│   ├── tfidf_vectorizer.pkl  # Text vectorizer for recommendations
+│   ├── feature_vectors.pkl   # Precomputed TF-IDF vectors
+│   ├── recommendation_data.csv # Full property catalog
+│   ├── raw_data.csv          # Cleaned raw dataset
+│   ├── train.csv             # Training split
+│   └── test.csv              # Test split
+├── NOTEBOOK/                 # Source data and exploration
+│   └── DATA/
+│       └── House_Price_Prediction.csv
+└── src/
+    └── MainPredictionPipeline/
+        ├── components/       # ML pipeline components
+        │   ├── DataIngestion.py      # Loads raw CSV, creates train/test splits
+        │   ├── DataTransformation.py # Preprocessing, TF-IDF for recommendations
+        │   ├── ModelTraining.py      # Ensemble regression model training
+        │   └── ModelEvaluation.py    # R2/MAE evaluation
+        ├── pipeline/         # Pipeline orchestration
+        │   ├── train_pipeline.py     # Orchestrates training workflow
+        │   └── predict_pipeline.py   # Prediction and recommendation serving
+        ├── utils/
+        │   └── common.py             # Serialization and model evaluation utilities
+        ├── logger.py                 # Centralized logging configuration
+        └── execution.py              # Custom exception handling
 
 - `app.py` is the entry point for the backend service. It starts a Flask server and exposes REST APIs.
 - At startup, it checks whether required artifacts exist in `artifacts/` and triggers the training pipeline automatically if they are missing.
@@ -126,6 +161,28 @@ The `-e .` entry installs the local backend package from `setup.py` in editable 
   5. `app.py` uses the serialized `preprocessor.pkl` and `model.pkl` to serve predictions and recommendations.
 
 ### Frontend architecture
+
+
+Housing_Frontend/
+├── src/
+│   ├── main.jsx           # React entry point (mounts App)
+│   ├── App.jsx            # Router configuration (3 routes)
+│   ├── App.css            # Global styles
+│   ├── index.css          # Tailwind/Design tokens
+│   ├── pages/             # Route-level components
+│   │   ├── HomePage.jsx           # Landing page with search + recommendations
+│   │   ├── PricePredictionPage.jsx  # Dedicated price prediction form
+│   │   └── ResultsPage.jsx        # Recommendation results grid
+│   └── components/        # Reusable UI components
+│       ├── Header.jsx              # Navigation/header
+│       ├── Footer.jsx              # Footer
+│       ├── SearchBar.jsx           # Filter form with 8+ fields
+│       ├── HouseCard.jsx           # Property listing card
+│       ├── HouseDetailModal.jsx    # Full-screen property details
+│       └── RecommendationCarousel.jsx # Horizontal scrolling carousel
+├── public/              # Static assets (favicon, icons)
+├── dist/                # Built output
+└── package.json         # Vite + React + Tailwind dependencies
 
 - The frontend is a Vite-powered React app located under `Housing_Frontend/src/`.
 - Core structure:
