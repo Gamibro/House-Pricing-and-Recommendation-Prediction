@@ -1,0 +1,12 @@
+pandas
+scikit-learn==1.3.2
+streamlit
+flask
+flask-cors
+matplotlib
+seaborn
+numpy
+ipykernel
+feature-engine 
+xgboost
+-e .

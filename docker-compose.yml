@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./Housing_Backend
+    image: housing_backend     # Points to the image you just built manually
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Housing_Backend:/service
+
+  frontend:
+    build: ./Housing_Frontend
+    image: housing_frontend     # Points to the image you just built manually
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Housing_Frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
