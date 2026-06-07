@@ -24,31 +24,65 @@ The repository is organized into two main services: the `Housing_Backend` and th
 
 ```text
 📦 Repository Root
-├── 📁 Housing_Backend/           # Python/Flask ML REST API
-│   ├── app.py                    # Main Flask application & API entry point
-│   ├── Dockerfile                # Backend containerization
-│   ├── requirements.txt          # Python dependencies (includes local package flag '-e .')
-│   ├── setup.py                  # Local package configuration
-│   ├── 📁 artifacts/             # Generated ML models and data files
-│   ├── 📁 NOTEBOOK/              # Jupyter notebooks and raw data
+├── 📁 Housing_Backend/               # Python/Flask ML REST API
+│   ├── .gitignore                    # Git ignore rules
+│   ├── app.py                        # Main Flask application & API entry point
+│   ├── Dockerfile                    # Backend containerization
+│   ├── Instructions.md               # Docker setup and run instructions
+│   ├── requirements.txt              # Python dependencies (includes local package flag '-e .')
+│   ├── setup.py                      # Local package configuration
+│   ├── template.py                   # Boilerplate generation script
+│   ├── 📁 artifacts/                 # Generated ML models and data files
+│   │   ├── feature_vectors.pkl       # Precomputed TF-IDF vectors
+│   │   ├── model.pkl                 # Trained ensemble ML model
+│   │   ├── preprocessor.pkl          # Feature preprocessing pipeline
+│   │   ├── raw_data.csv              # Cleaned raw dataset
+│   │   ├── recommendation_data.csv   # Full property catalog
+│   │   ├── test.csv                  # Test split
+│   │   ├── tfidf_vectorizer.pkl      # Text vectorizer for recommendations
+│   │   └── train.csv                 # Training split
+│   ├── 📁 NOTEBOOK/                  # Jupyter notebooks and raw data
+│   │   └── 📁 DATA/
+│   │       └── House_Price_Prediction.csv
 │   └── 📁 src/
 │       └── 📁 MainPredictionPipeline/
-│           ├── 📁 components/    # Ingestion, transformation, training, evaluation
-│           ├── 📁 pipeline/      # Orchestration for training and predicting
-│           ├── 📁 utils/         # Helper functions (serialization/evaluation)
-│           ├── execution.py      # Custom exception handling
-│           └── logger.py         # Centralized logging configuration
+│           ├── execution.py          # Custom exception handling
+│           ├── logger.py             # Centralized logging configuration
+│           ├── 📁 components/        # ML pipeline components
+│           │   ├── DataIngestion.py
+│           │   ├── DataTransformation.py
+│           │   ├── ModelEvaluation.py
+│           │   └── ModelTraining.py
+│           ├── 📁 pipeline/          # Orchestration
+│           │   ├── predict_pipeline.py
+│           │   └── train_pipeline.py
+│           └── 📁 utils/             # Helper functions
+│               └── common.py
 │
-└── 📁 Housing_Frontend/          # React/Vite User Interface
-    ├── index.html                # HTML entry point
-    ├── Dockerfile                # Frontend containerization
-    ├── package.json              # Node dependencies
-    ├── vite.config.js            # Vite build configuration
+└── 📁 Housing_Frontend/              # React/Vite User Interface
+    ├── .gitignore                    # Git ignore rules
+    ├── Dockerfile                    # Frontend containerization
+    ├── index.html                    # HTML entry point
+    ├── package.json                  # Node dependencies and scripts
+    ├── vite.config.js                # Vite build configuration
+    ├── 📁 dist/                      # Built output directory
+    ├── 📁 public/                    # Static assets (favicon, icons)
     └── 📁 src/
-        ├── main.jsx              # React entry point
-        ├── App.jsx               # Application routing
-        ├── 📁 pages/             # Route-level views (Home, Predict, Results)
-        └── 📁 components/        # Reusable UI widgets (Header, Cards, Carousels)
+        ├── App.css                   # Global styles
+        ├── App.jsx                   # Application routing
+        ├── index.css                 # Tailwind/Design tokens
+        ├── main.jsx                  # React entry point
+        ├── 📁 components/            # Reusable UI widgets
+        │   ├── Footer.jsx
+        │   ├── Header.jsx
+        │   ├── HouseCard.jsx
+        │   ├── HouseDetailModal.jsx
+        │   ├── RecommendationCarousel.jsx
+        │   └── SearchBar.jsx
+        └── 📁 pages/                 # Route-level views
+            ├── HomePage.jsx
+            ├── PricePredictionPage.jsx
+            └── ResultsPage.jsx
 
 ```
 
