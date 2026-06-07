@@ -1,6 +1,3 @@
-Here is a restructured, attractive, and highly readable version of your README. It is optimized for a GitHub repository, using a clean hierarchy, tables for quick scanning, and clear technical descriptions perfectly suited for a full-stack machine learning portfolio project.
-
----
 
 # 🏡 House Price Recommendation System
 
