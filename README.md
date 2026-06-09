@@ -151,3 +151,10 @@ Both the frontend and backend are containerized for seamless deployment.
 docker compose up --build
 
 ```
+
+## Documentation Link
+Refer to the documentation provided in the link below regarding the House Price Prediction System
+https://drive.google.com/file/d/1hXBPBCmpSAdBalw78ocRMaXpsUnnvt_S/view?usp=drive_link
+
+---
+
